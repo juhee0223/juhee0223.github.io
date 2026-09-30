@@ -708,5 +708,19 @@
         "Cosmos+ OpenSSD 장비 관리, FTL 실습 지원 및 연구 장비 교육 보조"
       ]
     }
+  ],
+  "credentials": [
+    {
+      "category": "자격증",
+      "title": "정보처리기사",
+      "detail": "한국산업인력공단",
+      "date": "2026.09"
+    },
+    {
+      "category": "어학",
+      "title": "TOEIC 790점",
+      "detail": "영어",
+      "date": "2025.11"
+    }
   ]
 }

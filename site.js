@@ -49,6 +49,52 @@
     window.addEventListener('resize', scheduleContents);
     updateContents();
   }
+  let scheduleHeaderNavigation = () => {};
+  const header = document.querySelector('.site-header');
+  const headerLinks = [...document.querySelectorAll('#site-nav a')]
+    .filter(link => link.hash)
+    .map(link => ({ link, section: document.getElementById(link.hash.slice(1)) }));
+  if (headerLinks.length) {
+    let headerScheduled = false;
+    const clearHeaderCurrent = () => headerLinks.forEach(item => item.link.removeAttribute('aria-current'));
+    function updateHeaderCurrent() {
+      if (document.querySelector('.case-hero')) {
+        headerLinks.forEach(item => {
+          if (item.link.hash === '#projects') item.link.setAttribute('aria-current', 'page');
+          else item.link.removeAttribute('aria-current');
+        });
+      } else {
+        const sectionLinks = headerLinks.filter(item => item.section);
+        if (!sectionLinks.length) {
+          headerScheduled = false;
+          return;
+        }
+        const offset = (header?.offsetHeight || 0) + 24;
+        let current = null;
+        sectionLinks.forEach(item => {
+          if (item.section.getBoundingClientRect().top <= offset) current = item;
+        });
+        if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2) {
+          current = sectionLinks[sectionLinks.length - 1];
+        }
+        clearHeaderCurrent();
+        current?.link.setAttribute('aria-current', 'location');
+      }
+      headerScheduled = false;
+    }
+    function scheduleHeaderCurrent() {
+      if (!headerScheduled) {
+        headerScheduled = true;
+        requestAnimationFrame(updateHeaderCurrent);
+      }
+    }
+    window.addEventListener('scroll', scheduleHeaderCurrent, { passive: true });
+    window.addEventListener('resize', scheduleHeaderCurrent);
+    window.addEventListener('hashchange', scheduleHeaderCurrent);
+    window.addEventListener('load', scheduleHeaderCurrent);
+    updateHeaderCurrent();
+    scheduleHeaderNavigation = scheduleHeaderCurrent;
+  }
   const buttons = document.querySelectorAll('[data-filter]');
   const cards = document.querySelectorAll('.project-card');
   buttons.forEach(button => button.addEventListener('click', () => {
@@ -65,5 +111,6 @@
     });
     const count = document.querySelector('.project-count');
     if (count) count.textContent = `${visible}개의 프로젝트`;
+    scheduleHeaderNavigation();
   }));
 })();
