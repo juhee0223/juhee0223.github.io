@@ -3,16 +3,34 @@
 from pathlib import Path
 from html import escape
 import json
+import re
 from hashlib import sha256
 
 ROOT = Path(__file__).parent
 DATA = json.loads((ROOT / 'content.json').read_text())
 BASE = 'https://juhee0223.github.io'
 STYLE_VERSION = sha256((ROOT / 'styles.css').read_bytes()).hexdigest()[:10]
+SCRIPT_VERSION = sha256((ROOT / 'site.js').read_bytes()).hexdigest()[:10]
 CATS = {'service':'서비스 개발·운영','ai':'AI 응용','systems':'시스템 연구'}
 def e(s): return escape(str(s), quote=True)
 def tags(items): return ''.join(f'<span>{e(x)}</span>' for x in items)
 def links(items): return ''.join(f'<a class="text-link" href="{e(x["url"])}" target="_blank" rel="noopener noreferrer">{e(x["label"])} <span aria-hidden="true">↗</span></a>' for x in items)
+# Exact phrases already present in the reviewed copy; emphasis adds no claims.
+DETAIL_HIGHLIGHTS = {
+    'danzzan': ['10,000 VU', '중복 발급 0건', '발급 순번 갭 0건', '필수 동의 판정', 'SMS 딥링크', 'required 속성과 체크 상태', '저장 트랜잭션을 행별로 분리', '미번역 데이터 0건', 'Lua 원자 처리'],
+    'conquer-health': ['46.51점', '14팀 중 1위', '벤치마크상', 'HealthBench 평가 기준', 'ANSWER_INSTRUCTION', '별도 LLM 호출을 추가하지 않음', '회귀 테스트'],
+    'olly': ['5개 시나리오', '각 10회', 'request_id와 trace_id', '로컬 SLM', '오류 상태를 유지한 추적', '단일 요청을 기준'],
+    'sketch-to-spec': ['SRS 요구사항 명세', 'ASCII 화면 흐름', '계획 수정 루프', 'Self-Healing(Plan Revision)', '멀티모달 입력 결합'],
+    'sun-date': ['봉사활동이라는 공동 경험', 'EASYTHON 2025 해커톤 우수상'],
+    'gamegc': ['Greedy와 Cost-Benefit', 'Pipeline 기반 GameGC', '스파이크와 점진적 회수 패턴'],
+    'dacon': ['F1 Score', '상위 10%', 'Feature engineering', '모델별 성능을 비교'],
+    'bird-repeller': ['KHUTHON 2025 해커톤 우수상', '기피음을 자동 재생', 'YOLOv5 기반 조류 인식', 'Threading'],
+    'rocksdb': ['제1저자', '1천만 건', '4,096B', 'Write Amplification Factor', '조회 성공 횟수', '84,097 ops/s', '64,667 ops/s', 'Hit 5,797회'],
+}
+def highlighted(text, slug):
+    pattern = '|'.join(re.escape(e(term)) for term in sorted(DETAIL_HIGHLIGHTS[slug], key=len, reverse=True))
+    return re.sub(pattern, lambda match: f'<strong class="detail-highlight">{match.group()}</strong>', e(text))
+
 def shell(title, body, depth='', description='현장의 요구를 구체화하고, 구현과 검증으로 서비스에 반영하는 개발자 박주희의 포트폴리오.', canonical=''):
     home = depth+'index.html' if depth else ''
     return f'''<!doctype html>
@@ -22,7 +40,7 @@ def shell(title, body, depth='', description='현장의 요구를 구체화하�
 <link rel="canonical" href="{BASE}/{canonical}"><link rel="icon" href="{depth}assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{depth}styles.css?v={STYLE_VERSION}"><script src="{depth}site.js" defer></script></head>
+<link rel="stylesheet" href="{depth}styles.css?v={STYLE_VERSION}"><script src="{depth}site.js?v={SCRIPT_VERSION}" defer></script></head>
 <body><a class="skip-link" href="#main">본문으로 바로가기</a>
 <header class="site-header"><div class="nav-wrap"><a class="brand" href="{depth}index.html" aria-label="박주희 포트폴리오 홈"><span>박주희</span><small>Software Engineer</small></a>
 <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">메뉴 <span aria-hidden="true">☰</span></button>
@@ -50,8 +68,8 @@ def home():
 def detail(p,i):
     body_sections=''
     for j,s in enumerate(p['sections']):
-        paragraphs=''.join(f'<p>{e(t)}</p>' for t in s.get('paragraphs',[]))
-        bullets='<ul>'+''.join(f'<li>{e(t)}</li>' for t in s.get('bullets',[]))+'</ul>' if s.get('bullets') else ''
+        paragraphs=''.join(f'<p>{highlighted(t,p["slug"])}</p>' for t in s.get('paragraphs',[]))
+        bullets='<ul>'+''.join(f'<li>{highlighted(t,p["slug"])}</li>' for t in s.get('bullets',[]))+'</ul>' if s.get('bullets') else ''
         body_sections+=f'<section class="case-section" id="section-{j}"><div><h2>{e(s["title"])}</h2>{paragraphs}{bullets}</div></section>'
     gallery=''
     if p['slug']=='danzzan':
@@ -60,7 +78,7 @@ def detail(p,i):
         gallery='''<section class="case-gallery"><div class="eyebrow">로컬 MVP 데모</div><h2>오류 요청도 추적할 수 있도록</h2><figure><a href="../assets/olly-error.png" target="_blank" rel="noopener"><img class="wide-image" src="../assets/olly-error.png" alt="의도적으로 오류를 발생시킨 OLLY 데모에서 요청 ID, trace ID, 오류 상태가 함께 표시된 화면" width="1336" height="676" loading="lazy"></a><figcaption>실패 요청의 ID와 오류 상태를 유지하는 데모 화면 · 팀 공동 산출물</figcaption></figure></section>'''
     nav=''.join(f'<a href="#section-{j}">{e(s["title"])}</a>' for j,s in enumerate(p['sections']))
     nxt=DATA['projects'][(i+1)%len(DATA['projects'])]
-    return f'''<main id="main"><div class="container"><a class="back-link" href="../index.html#projects">← 전체 프로젝트</a><section class="case-hero"><div><p class="eyebrow">{e(CATS[p['category']])}</p><h1>{e(p['title'])}</h1><p class="case-subtitle">{e(p['subtitle'])}</p><div class="case-meta"><span>{e(p['period'])}</span><span>{e(p['kind'])}</span></div><p class="case-summary">{e(p['summary'])}</p><div class="pub-links">{links(p['links'])}</div></div></section><div class="case-overview"><div><span class="eyebrow">기여와 역할</span><p>{e(p['role'])}</p></div><div><span class="eyebrow">결과</span><p>{e(p['outcome'])}</p></div><div><span class="eyebrow">사용 기술</span><div class="tech-tags">{tags(p['tech'])}</div></div></div><div class="case-layout"><aside class="case-toc"><span class="eyebrow">목차</span>{nav}<a href="#evidence">관련 자료</a></aside><div class="case-body">{body_sections}{gallery}<section id="evidence" class="case-evidence"><p class="eyebrow">관련 자료</p><h2>구현과 기록 살펴보기</h2><div class="evidence-links">{links(p['links'])}</div></section></div></div><nav class="project-pagination" aria-label="프로젝트 이동"><a href="../index.html#projects">← 프로젝트 목록</a><a href="{e(nxt['slug'])}.html"><small>다음 프로젝트</small><strong>{e(nxt['title'])} →</strong></a></nav></div></main>'''
+    return f'''<main id="main"><div class="container"><a class="back-link" href="../index.html#projects">← 전체 프로젝트</a><section class="case-hero"><div><p class="eyebrow">{e(CATS[p['category']])}</p><h1>{e(p['title'])}</h1><p class="case-subtitle">{e(p['subtitle'])}</p><div class="case-meta"><span>{e(p['period'])}</span><span>{e(p['kind'])}</span></div><p class="case-summary">{e(p['summary'])}</p><div class="pub-links">{links(p['links'])}</div></div></section><div class="case-overview"><div><span class="eyebrow">기여와 역할</span><p>{e(p['role'])}</p></div><div><span class="eyebrow">결과</span><p>{highlighted(p['outcome'],p['slug'])}</p></div><div><span class="eyebrow">사용 기술</span><div class="tech-tags">{tags(p['tech'])}</div></div></div><div class="case-layout"><aside class="case-toc"><span class="eyebrow">목차</span>{nav}<a href="#evidence">관련 자료</a></aside><div class="case-body">{body_sections}{gallery}<section id="evidence" class="case-evidence"><p class="eyebrow">관련 자료</p><h2>구현과 기록 살펴보기</h2><div class="evidence-links">{links(p['links'])}</div></section></div></div><nav class="project-pagination" aria-label="프로젝트 이동"><a href="../index.html#projects">← 프로젝트 목록</a><a href="{e(nxt['slug'])}.html"><small>다음 프로젝트</small><strong>{e(nxt['title'])} →</strong></a></nav></div></main>'''
 
 (ROOT/'index.html').write_text(shell('Portfolio', home()))
 (ROOT/'projects').mkdir(exist_ok=True)
