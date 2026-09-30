@@ -55,12 +55,13 @@ h1, h2, h3 { line-height: 1.5; letter-spacing: -.04em; }
 .project-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
 .project-card { display: flex; border: 1px solid #dce0e4; border-radius: 6px; }
 .project-card:hover, .project-card:focus-within { border-color: var(--accent); }
-.card-body h3 a:hover, .card-cta:hover, .contact-email:hover { color: var(--accent-hover); }
-.card-body { padding: 26px; display: flex; flex: 1; min-width: 0; flex-direction: column; }
+.card-body:hover h3, .card-body:hover .card-cta, .contact-email:hover { color: var(--accent-hover); }
+.card-body { color: var(--ink); border-radius: inherit; padding: 26px; display: flex; flex: 1; min-width: 0; flex-direction: column; }
+.card-body:hover { color: var(--ink); }
 .card-meta { display: flex; justify-content: space-between; gap: 12px; font-size: 10px; color: var(--muted); margin-bottom: 12px; }
 .card-body h3 { font-size: 23px; font-weight: 600; }
-.card-body h3 a { color: var(--accent); display: flex; justify-content: space-between; gap: 20px; }
-.card-body h3 a span { font-size: 18px; font-weight: 400; color: var(--accent); }
+.card-body h3 { color: var(--accent); display: flex; justify-content: space-between; gap: 20px; }
+.card-body h3 span { font-size: 18px; font-weight: 400; color: var(--accent); }
 .card-subtitle { font-size: 14px; margin-top: 13px; line-height: 1.8; }
 .card-description { font-size: 12px; color: var(--muted); margin-top: 10px; line-height: 1.95; }
 .tech-tags { display: flex; flex-wrap: wrap; gap: 3px 0; margin-top: 17px; }

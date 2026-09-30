@@ -50,7 +50,7 @@ def shell(title, body, depth='', description='요구사항 조율, 서비스·�
 </body></html>'''
 
 def card(p, i):
-    return f'''<article class="project-card" data-category="{e(p['category'])}"><div class="card-body"><div class="card-meta"><span>{e(p['kind'])}</span><span>{e(p['period'])}</span></div><h3><a href="projects/{e(p['slug'])}.html">{e(p['title'])}<span aria-hidden="true">↗</span></a></h3><p class="card-subtitle">{e(p['subtitle'])}</p><p class="card-description">{e(p['summary'])}</p><div class="tech-tags">{tags(p['tech'][:5])}</div><div class="card-result">{e(p['outcome'])}</div><a class="card-cta" href="projects/{e(p['slug'])}.html">프로젝트 읽기 <span aria-hidden="true">→</span></a></div></article>'''
+    return f'''<article class="project-card" data-category="{e(p['category'])}"><a class="card-body" href="projects/{e(p['slug'])}.html" aria-labelledby="project-{e(p['slug'])}"><div class="card-meta"><span>{e(p['kind'])}</span><span>{e(p['period'])}</span></div><h3 id="project-{e(p['slug'])}">{e(p['title'])}<span aria-hidden="true">↗</span></h3><p class="card-subtitle">{e(p['subtitle'])}</p><p class="card-description">{e(p['summary'])}</p><div class="tech-tags">{tags(p['tech'][:5])}</div><div class="card-result">{e(p['outcome'])}</div><span class="card-cta">프로젝트 읽기 <span aria-hidden="true">→</span></span></a></article>'''
 
 def home():
     project_html=''.join(card(p,i) for i,p in enumerate(DATA['projects']))
