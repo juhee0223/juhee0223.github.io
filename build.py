@@ -46,7 +46,7 @@ def shell(title, body, depth='', description='요구사항 조율, 서비스·�
 <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">메뉴 <span aria-hidden="true">☰</span></button>
 <nav id="site-nav" aria-label="주요 메뉴"><a href="{home}#projects">프로젝트</a><a href="{home}#research">논문·출판</a><a href="{home}#awards">수상</a><a href="{home}#activities">활동</a><a href="{home}#credentials">자격증·어학</a><a class="nav-contact" href="{home}#contact">연락처</a></nav></div></header>
 {body}
-<footer class="site-footer"><div class="container footer-inner"><p>박주희의 프로젝트와 연구 기록.<br><span>© 2026 Park Juhee</span></p><a href="https://github.com/juhee0223" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="#main">맨 위로 ↑</a></div></footer>
+<footer class="site-footer"><div class="container footer-inner"><p>박주희 | DX Engineer 포트폴리오<br><span>© 2026 Park Juhee</span></p><a href="https://github.com/juhee0223" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="#main">맨 위로 ↑</a></div></footer>
 </body></html>'''
 
 def project_image(v, depth=''):
