@@ -656,27 +656,39 @@
       "venue": "KCC 2025",
       "year": "2025",
       "authors": "박주희, 신호진, Guangxun Zhao, 최종무",
-      "description": "같은 RocksDB에서도 Compaction 정책에 따라 쓰기 비용과 읽기 성능이 달라지는 이유를 실험하고, 워크로드에 따른 정책 선택의 근거를 제시했습니다.",
-      "distinction": "제1저자 · KCC 2025 발표",
+      "description": "RocksDB의 Leveled·Universal·FIFO Compaction을 비교하고, 처리율만으로는 드러나지 않는 쓰기 비용과 실제 데이터 조회 성공 여부를 함께 분석했습니다.",
+      "distinction": "제1저자 · KCC 2025 발표 · pp. 2500–2502",
       "links": [
         {
           "label": "학회",
           "url": "https://www.kiise.or.kr/conference/kcc/2025/"
+        },
+        {
+          "label": "RocksDB 프로젝트",
+          "url": "projects/rocksdb.html"
         }
       ],
       "id": "publication-kcc",
       "abstract": [
         {
           "label": "연구 목적",
-          "text": "Leveled·Universal·FIFO 정책의 읽기·쓰기 성능과 쓰기 증폭(WAF)을 비교해, 어떤 작업에 각 정책이 유리한지 분석했습니다."
+          "text": "SST 파일을 병합·정리하는 Compaction 방식이 읽기·쓰기 성능에 미치는 영향을 분석했습니다. 처리율과 지연시간뿐 아니라 쓰기 증폭(WAF), 쓰기 정체(Write Stall), 실제 조회 성공 횟수를 함께 확인해 정책별 장단점을 비교했습니다."
         },
         {
           "label": "실험 방법",
-          "text": "동일 환경에서 db_bench로 값 크기 4KB의 데이터 1,000만 건을 랜덤 쓰기한 뒤 랜덤 읽기를 수행했습니다. 처리율·지연시간·WAF와 실제 조회 성공률(Hit Rate)을 함께 비교했습니다."
+          "text": "Intel Core i7-1360P·메모리 15GB·Samsung 1TB SSD·Ubuntu 22.04.5 LTS 환경에서 RocksDB의 db_bench를 사용했습니다. 동일 조건으로 값 크기 4KB의 데이터 1,000만 건을 랜덤 쓰기한 뒤 랜덤 읽기를 수행하고, statistics 옵션으로 내부 지표를 수집했습니다."
         },
         {
-          "label": "주요 결과",
-          "text": "Leveled는 Universal보다 읽기 처리율이 약 1.3배 높았지만 WAF도 1.31배 높았습니다. FIFO는 쓰기 시간과 WAF가 가장 낮은 대신 데이터 삭제로 조회 성공률이 낮아졌습니다. 단일 정책의 우열보다 워크로드별 절충이 중요하며, 혼합 워크로드 검증은 후속 과제로 남겼습니다."
+          "label": "쓰기 결과",
+          "text": "쓰기 작업 시간은 Leveled 1,608.1초, Universal 1,091초, FIFO 533.7초였고, WAF는 각각 4.50·3.43·1.56이었습니다. Universal은 Leveled보다 Compaction 시간이 약 39.8%, Write Stall 시간이 약 48.5% 짧았습니다. FIFO는 파일 병합·정렬을 하지 않아 쓰기 비용이 가장 낮았습니다."
+        },
+        {
+          "label": "읽기 결과",
+          "text": "Leveled의 읽기 처리율은 약 8.41만 ops/s로 Universal의 약 6.47만 ops/s보다 약 1.3배 높았습니다. FIFO는 약 260만 ops/s로 측정됐지만, 실제 조회 성공 횟수는 5,797회로 Leveled 7,134,622회·Universal 7,005,533회보다 약 99.92% 적었습니다. 오래된 데이터를 삭제하는 FIFO의 특성 때문에 높은 처리율을 실제 데이터 조회 성능으로 해석하기 어려웠습니다."
+        },
+        {
+          "label": "의미·한계",
+          "text": "읽기 중심 작업에서는 Leveled, 쓰기 비용과 읽기 성능의 균형에서는 Universal의 이점을 확인했습니다. FIFO는 데이터 보존 요구까지 고려해야 하며, 처리율·지연시간과 조회 성공 여부를 함께 평가해야 합니다. 계층별 정책을 조합하는 Tiered Compaction과 읽기·쓰기 혼합 워크로드 실험은 후속 연구로 제안했습니다."
         }
       ]
     }
