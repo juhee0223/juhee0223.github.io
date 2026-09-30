@@ -504,11 +504,11 @@
       "id": "publication-rag-book"
     },
     {
-      "title": "Visualization and Semantic Interpretation of Vector Space Structures: A Case Study Based on OSTEP",
+      "title": "OSTEP 교재 기반 임베딩 모델의 구조적 특성과 검색 증강 생성 성능 비교 연구",
       "venue": "WDSC 2025",
       "year": "2025",
       "authors": "Bo-seung Kim, Juhee Park, 외 4명",
-      "description": "OSTEP 교재 텍스트를 임베딩하고 벡터 공간의 구조를 시각화해 의미론적 군집을 분석한 연구입니다.",
+      "description": "운영체제 교재의 개념이 임베딩 공간에 어떻게 표현되는지 분석하고, 모델·인덱스 선택에 따른 RAG 응답 품질과 저장 비용을 비교했습니다.",
       "distinction": "공동저자 · 우수논문상",
       "links": [
         {
@@ -520,7 +520,21 @@
           "url": "https://github.com/DKU-StarLab/OSTEP_RAG"
         }
       ],
-      "id": "publication-wdsc"
+      "id": "publication-wdsc",
+      "abstract": [
+        {
+          "label": "연구 목적",
+          "text": "OSTEP의 가상화·병행성·영속성 개념이 벡터 공간에서 구분되는지, 이 구조가 검색과 답변 품질에 어떻게 연결되는지 살폈습니다."
+        },
+        {
+          "label": "실험 방법",
+          "text": "교재를 5문장 단위·20% 중첩 청크로 나누고 E5-Small·Base·Large를 PCA와 거리 분석으로 비교했습니다. ANNOY·FAISS(HNSW·IVF-Flat) 인덱스와 Llama-3.1-8B-Instruct를 조합해 10개 질의응답을 RAGAS로 평가했습니다."
+        },
+        {
+          "label": "주요 결과",
+          "text": "실험 범위에서 HNSW + E5-Large가 Faithfulness 0.897, Context Precision 0.852로 가장 높았습니다. 모델 규모가 커질수록 개념 군집이 뚜렷했지만, Large의 평균 인덱스 크기는 17.5MB로 Small(7.2MB)의 약 2.4배였습니다. 소규모 평가에서 품질과 저장 비용의 차이를 확인했습니다."
+        }
+      ]
     },
     {
       "title": "RocksDB에서 Compaction Style에 따른 성능 변화 분석",
