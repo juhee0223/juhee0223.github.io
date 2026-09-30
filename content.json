@@ -699,6 +699,44 @@
   ],
   "activities": [
     {
+      "period": "2025.07 – 2026.02",
+      "title": "단국대학교 시스템소프트웨어 Lab",
+      "role": "학부연구생",
+      "focus": "RAG와 저장장치 공동연구",
+      "bullets": [
+        "운영체제 교재 기반 RAG 연구의 키워드 시각화와 결과 해석에 참여 · WDSC 2025 우수논문상",
+        "Cosmos+ OpenSSD의 할당 정책별 대역폭·지연시간 분석 공동연구 참여 · KSC 2025 논문 게재",
+        "Text-to-SQL 연구의 데이터 정제 지원"
+      ],
+      "links": [
+        {
+          "label": "WDSC 논문 요약",
+          "url": "#publication-wdsc"
+        }
+      ]
+    },
+    {
+      "period": "2025.01 – 2025.07",
+      "title": "단국대학교 시스템소프트웨어 Lab 스터디",
+      "role": "연구실 스터디",
+      "focus": "RocksDB 성능 비교와 KCC 2025 논문 발표",
+      "bullets": [
+        "스터디와 논문 지도를 받으며 Leveled·Universal·FIFO Compaction 비교",
+        "쓰기 증폭·읽기 처리율·실제 조회 성공 횟수를 함께 확인해 각 방식의 특성과 한계 분석",
+        "분석 결과를 논문으로 정리하고 KCC 2025에서 제1저자로 발표"
+      ],
+      "links": [
+        {
+          "label": "KCC 논문 요약",
+          "url": "#publication-kcc"
+        },
+        {
+          "label": "RocksDB 프로젝트",
+          "url": "projects/rocksdb.html"
+        }
+      ]
+    },
+    {
       "period": "2026.03 – 2026.08",
       "title": "단국대학교 SW 서포터즈",
       "bullets": [
