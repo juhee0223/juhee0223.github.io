@@ -17,7 +17,7 @@ def tags(items): return ''.join(f'<span>{e(x)}</span>' for x in items)
 def links(items): return ''.join(f'<a class="text-link" href="{e(x["url"])}" target="_blank" rel="noopener noreferrer">{e(x["label"])} <span aria-hidden="true">↗</span></a>' for x in items)
 # Exact phrases already present in the reviewed copy; emphasis adds no claims.
 DETAIL_HIGHLIGHTS = {
-    'danzzan': ['10,000 VU', '중복 발급 0건', '발급 순번 갭 0건', '필수 동의 판정', 'SMS 딥링크', 'required 속성과 체크 상태', '저장 트랜잭션을 행별로 분리', '미번역 데이터 0건', 'Lua 원자 처리'],
+    'danzzan': ['10,000 VU', '중복 발급 0건', '발급 순번 갭 0건', '필수 동의 판정', '총학생회·학교·협력사와 요구사항을 조율', '현장 팔찌 배부', 'SMS 딥링크', 'required 속성과 체크 상태', '저장 트랜잭션을 행별로 분리', '미번역 데이터 0건', 'Lua 원자 처리'],
     'conquer-health': ['46.51점', '14팀 중 1위', '벤치마크상', 'HealthBench 평가 기준', 'ANSWER_INSTRUCTION', '별도 LLM 호출을 추가하지 않음', '회귀 테스트'],
     'olly': ['5개 시나리오', '각 10회', 'request_id와 trace_id', '로컬 SLM', '오류 상태를 유지한 추적', '단일 요청을 기준'],
     'sketch-to-spec': ['SRS 요구사항 명세', 'ASCII 화면 흐름', '계획 수정 루프', 'Self-Healing(Plan Revision)', '멀티모달 입력 결합'],
@@ -31,7 +31,7 @@ def highlighted(text, slug):
     pattern = '|'.join(re.escape(e(term)) for term in sorted(DETAIL_HIGHLIGHTS[slug], key=len, reverse=True))
     return re.sub(pattern, lambda match: f'<strong class="detail-highlight">{match.group()}</strong>', e(text))
 
-def shell(title, body, depth='', description='현장의 요구를 구체화하고, 구현과 검증으로 서비스에 반영하는 개발자 박주희의 포트폴리오.', canonical=''):
+def shell(title, body, depth='', description='요구사항 조율, 서비스·데이터 연계, AI 활용과 운영 검증을 경험한 DX Engineer 지원자 박주희의 포트폴리오.', canonical=''):
     home = depth+'index.html' if depth else ''
     return f'''<!doctype html>
 <html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
@@ -42,7 +42,7 @@ def shell(title, body, depth='', description='현장의 요구를 구체화하�
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{depth}styles.css?v={STYLE_VERSION}"><script src="{depth}site.js?v={SCRIPT_VERSION}" defer></script></head>
 <body><a class="skip-link" href="#main">본문으로 바로가기</a>
-<header class="site-header"><div class="nav-wrap"><a class="brand" href="{depth}index.html" aria-label="박주희 포트폴리오 홈"><span>박주희</span><small>Software Engineer</small></a>
+<header class="site-header"><div class="nav-wrap"><a class="brand" href="{depth}index.html" aria-label="박주희 포트폴리오 홈"><span>박주희</span><small>DX Engineer</small></a>
 <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">메뉴 <span aria-hidden="true">☰</span></button>
 <nav id="site-nav" aria-label="주요 메뉴"><a href="{home}#projects">프로젝트</a><a href="{home}#research">논문·출판</a><a href="{home}#awards">수상</a><a href="{home}#activities">활동</a><a class="nav-contact" href="{home}#contact">연락처</a></nav></div></header>
 {body}
@@ -58,8 +58,8 @@ def home():
     awards=''.join(f'''<article class="award"><time>{e(a['date'])}</time><div><h3>{e(a['title'])}</h3><p>{e(a['organization'])}</p></div><span>{e(a['project'])}</span></article>''' for a in DATA['awards'])
     activities=''.join(f'''<article class="activity"><div class="eyebrow">{e(a['period'])}</div><h3>{e(a['title'])}</h3><ul>{''.join(f'<li>{e(b)}</li>' for b in a['bullets'])}</ul></article>''' for a in DATA['activities'])
     return f'''<main id="main">
-<section class="hero container"><p class="eyebrow">박주희 · SOFTWARE ENGINEER</p><h1>문제를 이해하고,<br><span class="accent-text">쓰이는 기술</span>로 답합니다.</h1><p class="hero-description">현장의 요구를 구체화하고 AI를 활용해 구현하며,<br>실제 사용과 검증을 통해 더 나은 결과를 만듭니다.</p><div class="hero-actions"><a class="text-link" href="#projects">프로젝트 살펴보기 ↓</a><a class="text-link" href="https://github.com/juhee0223" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div></section>
-<section id="projects" class="section container"><div class="section-heading"><div><h2>프로젝트 <span class="section-count">9</span></h2></div><p>축제 서비스부터 AI 에이전트, 스토리지 연구까지.<br>각 프로젝트의 문제와 선택, 구현 과정을 담았습니다.</p></div><div class="filter-row"><div class="filters" role="group" aria-label="프로젝트 분야 필터"><button type="button" data-filter="all" class="active" aria-pressed="true">전체 <span>9</span></button><button type="button" data-filter="service" aria-pressed="false">서비스</button><button type="button" data-filter="ai" aria-pressed="false">AI 응용</button><button type="button" data-filter="systems" aria-pressed="false">시스템 연구</button></div><p class="project-count" role="status" aria-live="polite">9개의 프로젝트</p></div><div class="project-grid">{project_html}</div></section>
+<section class="hero container"><p class="eyebrow">박주희 · DX Engineer</p><h1>현장의 요구를 이해하고,<br><span class="accent-text">업무를 개선하는 서비스</span>를 만듭니다.</h1><p class="hero-description">사용자와 운영자의 요구를 조율하고, 서비스와 데이터의 흐름을 연결합니다.<br>AI를 활용한 구현부터 사용자 검증과 운영 문제 해결까지 경험했습니다.</p><div class="hero-actions"><a class="text-link" href="#projects">프로젝트 살펴보기 ↓</a><a class="text-link" href="https://github.com/juhee0223" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div></section>
+<section id="projects" class="section container"><div class="section-heading"><div><h2>프로젝트 <span class="section-count">9</span></h2></div><p>요구사항 조율과 데이터 연계, AI 활용과 운영 검증.<br>서비스 개발·운영부터 시스템 연구까지, 판단과 실행의 근거를 담았습니다.</p></div><div class="filter-row"><div class="filters" role="group" aria-label="프로젝트 분야 필터"><button type="button" data-filter="all" class="active" aria-pressed="true">전체 <span>9</span></button><button type="button" data-filter="service" aria-pressed="false">서비스</button><button type="button" data-filter="ai" aria-pressed="false">AI 응용</button><button type="button" data-filter="systems" aria-pressed="false">시스템 연구</button></div><p class="project-count" role="status" aria-live="polite">9개의 프로젝트</p></div><div class="project-grid">{project_html}</div></section>
 <section id="research" class="section research-section"><div class="container"><div class="section-heading"><div><h2>논문 · 출판 <span class="section-count">3</span></h2></div><p>스토리지 성능 분석과 텍스트 임베딩 연구,<br>그리고 운영체제 교재 기반 RAG 저서.</p></div><div class="publication-list">{pubs}</div></div></section>
 <section id="awards" class="section container"><div class="section-heading"><div><h2>수상 <span class="section-count">4</span></h2></div><p>해커톤에서의 실행과 연구의 성과.</p></div><div class="award-list">{awards}</div></section>
 <section id="activities" class="section activities-section"><div class="container"><div class="section-heading"><div><h2>활동</h2></div><p>행사 운영, 콘텐츠 기획, 실습·연구 지원 경험.</p></div><div class="activity-grid">{activities}</div><div class="skills-panel"><div><h3>사용 기술</h3></div><div class="skill-groups"><p><strong>Development</strong><span>Java · Spring Boot · React · TypeScript · Python · C / C++</span></p><p><strong>AI & Data</strong><span>LLM / RAG · LangGraph · PyTorch · OpenCV · scikit-learn</span></p><p><strong>Systems & Operations</strong><span>Redis · Kafka · MySQL · Docker · Kubernetes · AWS · Linux · Git</span></p></div></div></div></section>
@@ -80,7 +80,7 @@ def detail(p,i):
     nxt=DATA['projects'][(i+1)%len(DATA['projects'])]
     return f'''<main id="main"><div class="container"><a class="back-link" href="../index.html#projects">← 전체 프로젝트</a><section class="case-hero"><div><p class="eyebrow">{e(CATS[p['category']])}</p><h1>{e(p['title'])}</h1><p class="case-subtitle">{e(p['subtitle'])}</p><div class="case-meta"><span>{e(p['period'])}</span><span>{e(p['kind'])}</span></div><p class="case-summary">{e(p['summary'])}</p><div class="pub-links">{links(p['links'])}</div></div></section><div class="case-overview"><div><span class="eyebrow">기여와 역할</span><p>{e(p['role'])}</p></div><div><span class="eyebrow">결과</span><p>{highlighted(p['outcome'],p['slug'])}</p></div><div><span class="eyebrow">사용 기술</span><div class="tech-tags">{tags(p['tech'])}</div></div></div><div class="case-layout"><aside class="case-toc"><span class="eyebrow">목차</span>{nav}<a href="#evidence">관련 자료</a></aside><div class="case-body">{body_sections}{gallery}<section id="evidence" class="case-evidence"><p class="eyebrow">관련 자료</p><h2>구현과 기록 살펴보기</h2><div class="evidence-links">{links(p['links'])}</div></section></div></div><nav class="project-pagination" aria-label="프로젝트 이동"><a href="../index.html#projects">← 프로젝트 목록</a><a href="{e(nxt['slug'])}.html"><small>다음 프로젝트</small><strong>{e(nxt['title'])} →</strong></a></nav></div></main>'''
 
-(ROOT/'index.html').write_text(shell('Portfolio', home()))
+(ROOT/'index.html').write_text(shell('DX Engineer Portfolio', home()))
 (ROOT/'projects').mkdir(exist_ok=True)
 for i,p in enumerate(DATA['projects']):
     (ROOT/'projects'/f'{p["slug"]}.html').write_text(shell(p['title'],detail(p,i),'../',p['summary'],f'projects/{p["slug"]}.html'))

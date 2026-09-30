@@ -1,8 +1,8 @@
-# Park Juhee · Portfolio
+# Park Juhee · DX Engineer Portfolio
 
 [포트폴리오 보기](https://juhee0223.github.io)
 
-서비스 개발·운영, AI 응용, 시스템 연구 프로젝트를 담은 개인 포트폴리오입니다.
+DX Engineer 지원을 위한 개인 포트폴리오입니다. 요구사항 조율, 서비스·데이터 연계, AI 활용과 운영 검증 경험을 서비스 개발·운영, AI 응용, 시스템 연구 프로젝트로 소개합니다.
 
 ## 수정 및 빌드
 
