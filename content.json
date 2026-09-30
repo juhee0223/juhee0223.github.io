@@ -1,0 +1,389 @@
+{
+  "projects": [
+    {
+      "slug": "danzzan",
+      "title": "단짠",
+      "subtitle": "축제 예매와 현장 입장을 연결한 서비스 개발·운영",
+      "period": "2025.12 – 진행 중",
+      "category": "service",
+      "kind": "팀 프로젝트 · 서비스 운영",
+      "summary": "축제 정보 탐색, 예매, 현장 입장과 팔찌 배부를 연결하는 대학 축제 웹앱입니다.",
+      "tech": ["Spring Boot", "Redis", "Kafka", "MySQL", "Docker", "AWS", "React", "TypeScript"],
+      "outcome": "팀 통합 부하 테스트에서 10,000 VU 기준 재고·발급 3,400장, 중복 발급 0건, 발급 순번 갭 0건을 확인했습니다.",
+      "links": [
+        {"label": "프론트엔드", "url": "https://github.com/DKU-Dan-Zzan/Danzzan-FE"},
+        {"label": "백엔드", "url": "https://github.com/DKU-Dan-Zzan/Danzzan-BE"},
+        {"label": "가입·동의 판정 변경 PR #65", "url": "https://github.com/DKU-Dan-Zzan/Danzzan-FE/pull/65"},
+        {"label": "번역 복구 PR #70", "url": "https://github.com/DKU-Dan-Zzan/Danzzan-BE/pull/70"}
+      ],
+      "role": "요구사항·가입 흐름 정리, 예매 API와 내 티켓·관리자 연동, 입장·발급 단계 보완, 운영 장애 복구 및 배포 후 확인에 참여",
+      "sections": [
+        {
+          "title": "요구사항을 가입과 입장 흐름으로 연결",
+          "paragraphs": [
+            "외부 얼굴인증 입장 연계를 위해 사용자 식별용 네이버 ID 수집과 예매 성공자 CSV 전달이 필요했습니다.",
+            "양일 예매자는 동일한 네이버 ID를 사용할 수 있지만 날짜별 입장 권한은 다를 수 있어, 협력사에 처리 기준과 전달 범위를 확인했습니다. 개발팀과 협력사는 전체 명단을 대조하는 방식에 합의했습니다."
+          ],
+          "bullets": [
+            "네이버 ID 수집을 위해 가입 단계를 늘리는 안과 기존 3단계 마지막에 배치하는 안을 비교",
+            "입력 부담과 단계 수를 고려해 마지막 단계에 안내와 입력란을 배치",
+            "React·TypeScript 화면과 필수 동의 판정 로직 수정"
+          ]
+        },
+        {
+          "title": "사용자 검증에서 확인한 가입 혼란 개선",
+          "paragraphs": [
+            "서비스를 처음 사용하는 학생 대상 베타테스트에서 SMS 인증 방식의 혼란을 확인했습니다.",
+            "안내를 간결하게 수정하고 SMS 딥링크로 문자 앱을 연결했습니다. 안내 이후에도 네이버 이메일 주소 전체를 입력하는 경우가 있어, 정제 담당을 협력사와 별도로 합의했습니다."
+          ],
+          "bullets": [
+            "필수 동의 여부를 고정 배열 인덱스가 아닌 required 속성과 체크 상태로 판정하도록 변경",
+            "네이버 이메일 형식 정제 방안을 제안하고 협의 후 네이버페이 담당으로 확정"
+          ]
+        },
+        {
+          "title": "번역 누락과 반복 호출 복구",
+          "paragraphs": [
+            "영어 화면 일부가 한국어로 남고 신규 공지 자동 번역이 저장되지 않는 문제를 확인했습니다. Docker 로그와 MySQL 상태를 분석해 영문 컬럼 길이 초과로 저장이 롤백되고 같은 번역 요청이 반복되는 구조를 파악했습니다.",
+            "영문 컬럼을 확장하고 저장 트랜잭션을 행별로 분리한 뒤, 번역을 재개하고 공백 데이터를 정리했습니다."
+          ],
+          "bullets": [
+            "미번역 데이터 0건 확인",
+            "신규 공지의 자동 번역·저장·영어 화면 표시 확인",
+            "번역 기능의 최초 구현은 팀원 작업이며, 장애 분석·수정·배포 후 확인에 참여"
+          ]
+        },
+        {
+          "title": "티켓 발급의 동시성 및 예외 검증",
+          "paragraphs": [
+            "한정된 티켓에 요청이 몰리는 조건에서 재고 한도를 지키고 중복 발급을 막기 위해 Redis 대기열, Lua 원자 처리, Outbox와 Kafka 기반 발급 흐름을 구성했습니다.",
+            "비동기 발급 시 탈퇴 여부를 다시 확인하고 권리포기 티켓의 중복 예매와 관리자 지급을 막는 처리를 보완했습니다."
+          ],
+          "bullets": [
+            "예매 API와 입장·발급 단계의 경계 정리",
+            "Lua 원자 처리와 검증 코드 작성",
+            "부하 테스트 스크립트와 결과 집계 보완"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "conquer-health",
+      "title": "Conquer Health",
+      "subtitle": "평가 기준을 응답 규칙으로 옮긴 의료 AI 개선",
+      "period": "2026.08",
+      "category": "ai",
+      "kind": "팀 해커톤 · 20시간",
+      "summary": "루닛의 의료 특화 모델 L2-preview를 활용해 건강 상담 응답을 개선하고 HealthBench 평가 하네스를 보완한 프로젝트입니다.",
+      "tech": ["Python", "HTTP API", "Docker", "MCP", "LLM", "HealthBench"],
+      "outcome": "팀은 정식 평가 3라운드 평균 46.51점으로 평가 참여 14팀 중 1위를 기록하며 의료 특화 파운데이션 모델 해커톤 벤치마크상을 받았습니다.",
+      "links": [
+        {"label": "프로젝트 저장소", "url": "https://github.com/Hackathon-AIM/health-conquer-submission"},
+        {"label": "응답 규칙 변경 커밋", "url": "https://github.com/Hackathon-AIM/health-conquer-submission/commit/52e79c8f5e2cb080466f9a299ee05b0afd9d0f69"}
+      ],
+      "role": "개발 중 비교 결과를 바탕으로 집중 방향을 제안하고, HealthBench 기준 분석과 팀의 응답 규칙·하네스 공동 개선에 참여",
+      "sections": [
+        {
+          "title": "점수 정체 상황에서 비교 결과로 방향 제안",
+          "paragraphs": [
+            "MCP 기반 외부 검색 접근의 점수가 기대만큼 오르지 않았고, 호출을 줄인 팀 실험에서는 점수 상승을 확인했습니다.",
+            "사전 합의한 시점에 당시 최고 대시보드 점수를 기록한 구현을 중심으로 남은 보완 시간을 집중하자고 제안했습니다."
+          ],
+          "bullets": [
+            "모델 직접 호출과 응답 잘림·빈 응답 재시도 중심으로 최종 제출안 정리",
+            "검색 접근을 배제한 비교 결과를 팀의 공통 판단 근거로 활용"
+          ]
+        },
+        {
+          "title": "평가 관점을 응답 행동 규칙으로 구체화",
+          "paragraphs": [
+            "HealthBench 평가 기준을 분석한 뒤 팀과 함께 질문의 모든 요구를 다루기, 위험 신호 안내하기, 답을 바꿀 핵심 정보가 부족할 때 질문하기를 응답 규칙으로 정리했습니다.",
+            "정보가 부족하더라도 가능한 설명을 먼저 제공하도록 지시를 다듬었습니다."
+          ],
+          "bullets": [
+            "기존 생성 요청의 마지막 사용자 메시지에 ANSWER_INSTRUCTION 반영",
+            "규칙 반영을 위해 별도 LLM 호출을 추가하지 않음"
+          ]
+        },
+        {
+          "title": "실행과 실패 조건 점검",
+          "paragraphs": [
+            "OpenAI 호환 제출 서버와 질의 분류·MCP 검색 후보를 구현한 뒤 실행 결과를 확인하며 수정했습니다.",
+            "호출 동시성 제한과 요청별 시간 예산을 실험하고, 시간 초과 후 재시도에도 응답 지시문이 유지되는지 확인하는 회귀 테스트를 추가했습니다."
+          ],
+          "bullets": [
+            "다국어·응급 대화를 점검하는 합성 테스트 도구 구성",
+            "정식 평가 점수는 팀 전체 구현의 결과이며 개별 규칙의 독립 효과를 뜻하지 않음"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "olly",
+      "title": "OLLY",
+      "subtitle": "느린 LLM 요청의 원인을 단계별로 확인하는 관측성 MVP",
+      "period": "2026.05 – 2026.06",
+      "category": "systems",
+      "kind": "4인 팀 · 로컬 MVP",
+      "summary": "LLM/RAG 서비스에서 검색·모델 호출·오류를 요청 단위로 연결해 지연 원인을 추적하는 관측성 MVP입니다.",
+      "tech": ["FastAPI", "OpenTelemetry", "Prometheus", "Jaeger", "Grafana", "Docker", "Kubernetes", "Ollama"],
+      "outcome": "정상·검색 지연·모델 지연·토큰 증가·오류의 5개 시나리오를 각 10회 실행해 span·지표·오류 알림 연결을 확인했습니다.",
+      "links": [
+        {"label": "프로젝트 저장소", "url": "https://github.com/lee-y-ch/olly"}
+      ],
+      "role": "문제 정의, 로컬 SLM 선택과 개발 범위 판단, 반복 검증 시나리오 설계 담당",
+      "sections": [
+        {
+          "title": "요청 안의 실행 단위를 추적",
+          "paragraphs": [
+            "전체 응답 시간만으로는 검색·모델 호출·후처리 중 어디에서 지연되는지 구분하기 어렵습니다.",
+            "Chat UI의 request_id와 trace_id를 대시보드·Jaeger·오류 알림에 연결해 한 요청의 실행 단위를 확인하도록 설계했습니다."
+          ],
+          "bullets": [
+            "검색과 모델 호출의 span 및 소요 시간 비교",
+            "요청별 토큰·비용 지표 확인",
+            "오류 상태를 유지한 추적과 Discord 알림 연결"
+          ]
+        },
+        {
+          "title": "반복 가능한 로컬 검증 범위 설정",
+          "paragraphs": [
+            "외부 API 비용과 호출 제한 영향을 줄이기 위해 로컬 SLM을 선택했습니다.",
+            "정상 흐름과 단계별 지연·토큰 증가·오류를 구분해 반복 실행하도록 검증 범위를 설계했습니다."
+          ],
+          "bullets": [
+            "지연을 주입한 단계의 span 증가 확인",
+            "시나리오별 지표 차이와 오류 요청 추적 확인",
+            "로컬 MVP 관측 흐름 검증이며 운영 환경 성능 개선율은 측정하지 않음"
+          ]
+        },
+        {
+          "title": "관측 데이터의 활용 경로",
+          "paragraphs": [
+            "FastAPI API 계측에서 수집한 요청 정보가 Prometheus 지표와 Jaeger 추적으로 이어지고, 실패 요청은 알림으로 연결됩니다.",
+            "단일 요청을 기준으로 지연·토큰·오류를 함께 확인하도록 해 장애 원인을 단계별로 좁힐 수 있는 MVP를 구성했습니다."
+          ],
+          "bullets": [
+            "OpenTelemetry 기반 요청 흐름 계측",
+            "Prometheus·Grafana 지표와 Jaeger trace 결합",
+            "SLM·Discord 기반 알림 흐름 구성"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "sketch-to-spec",
+      "title": "SketchToSpec",
+      "subtitle": "손그림 입력에서 요구사항 명세와 화면 흐름을 생성하는 멀티모달 에이전트",
+      "period": "2025.11 – 2025.12",
+      "category": "ai",
+      "kind": "개인 프로젝트",
+      "summary": "손그림 UI·기능·텍스트 입력을 결합해 SRS 요구사항 명세서와 ASCII 화면 흐름을 생성하는 멀티모달 ReAct Agent 시스템입니다.",
+      "tech": ["LangGraph", "Streamlit", "OpenCV", "PyTorch", "Qwen"],
+      "outcome": "UI 요소 감지와 LangGraph StateGraph 기반 계획 수정 루프를 포함한 멀티모달 ReAct Agent 파이프라인을 구축했습니다.",
+      "links": [
+        {"label": "GitHub", "url": "https://github.com/juhee0223/DEEPLEARNING_AI_AGENT"}
+      ],
+      "role": "개인 프로젝트의 시스템 설계·구현",
+      "sections": [
+        {
+          "title": "입력에서 명세로",
+          "paragraphs": ["손그림 UI, 기능 설명, 텍스트 입력을 함께 해석해 SRS 요구사항 명세와 ASCII 화면 흐름을 생성하도록 구성했습니다."],
+          "bullets": ["OpenCV 기반 UI 요소 감지", "멀티모달 입력 결합"]
+        },
+        {
+          "title": "계획 수정 루프",
+          "paragraphs": ["LangGraph StateGraph 기반 Self-Healing(Plan Revision) 루프로 생성 결과를 바탕으로 계획을 수정하는 흐름을 구현했습니다."],
+          "bullets": ["LangGraph 기반 ReAct Agent", "Streamlit 기반 인터페이스", "로컬 LLM Qwen 활용"]
+        }
+      ]
+    },
+    {
+      "slug": "sun-date",
+      "title": "Sun(善)-Date",
+      "subtitle": "봉사활동을 함께 하며 서로를 알아가는 소셜 네트워킹 서비스",
+      "period": "2025.11",
+      "category": "service",
+      "kind": "팀 해커톤",
+      "summary": "봉사활동을 함께 하며 서로를 알아볼 수 있는 소셜 네트워킹 및 소개팅 서비스입니다.",
+      "tech": ["Django", "Flutter", "Java"],
+      "outcome": "EASYTHON 2025 해커톤 우수상을 받았습니다.",
+      "links": [
+        {"label": "GitHub", "url": "https://github.com/day-e0n/sun_date"}
+      ],
+      "role": "팀 프로젝트",
+      "sections": [
+        {
+          "title": "서비스 방향",
+          "paragraphs": ["봉사활동이라는 공동 경험을 중심으로 사용자가 서로를 알아갈 수 있는 소셜 네트워킹·소개팅 서비스를 기획했습니다."],
+          "bullets": ["봉사활동 기반 연결", "소셜 네트워킹 서비스"]
+        },
+        {
+          "title": "구현 환경과 결과",
+          "paragraphs": ["Django, Flutter, Java를 활용한 팀 해커톤 프로젝트로 결과물을 구현했습니다."],
+          "bullets": ["EASYTHON 2025 해커톤 우수상", "프로젝트 저장소 공개"]
+        }
+      ]
+    },
+    {
+      "slug": "gamegc",
+      "title": "FTL Simulator / GameGC",
+      "subtitle": "GC 정책과 점진적 회수 방식의 성능 비교 실험",
+      "period": "2025.10 – 2025.12",
+      "category": "systems",
+      "kind": "팀 프로젝트 · 연구",
+      "summary": "Greedy·Cost-Benefit GC 정책과 Incremental GC를 모방한 Pipeline 기반 GameGC 방식의 성능을 비교한 프로젝트입니다.",
+      "tech": ["C", "File I/O", "Visualization"],
+      "outcome": "GC latency의 스파이크와 점진적 회수 패턴을 비교·분석했습니다.",
+      "links": [
+        {"label": "GitHub", "url": "https://github.com/day-e0n/ssp_team_project"}
+      ],
+      "role": "팀 프로젝트",
+      "sections": [
+        {
+          "title": "GC 정책 구현과 비교",
+          "paragraphs": ["C로 Greedy와 Cost-Benefit GC 정책을 구현하고, Incremental GC를 모방한 Pipeline 기반 GameGC와 성능을 비교했습니다."],
+          "bullets": ["GC 정책별 동작 비교", "파일 I/O 기반 실험"]
+        },
+        {
+          "title": "지연 패턴 분석",
+          "paragraphs": ["GC latency에서 나타나는 스파이크와 점진적 회수 패턴을 시각화해 분석했습니다."],
+          "bullets": ["성능 데이터 시각화", "스토리지 GC 동작 탐구"]
+        }
+      ]
+    },
+    {
+      "slug": "dacon",
+      "title": "DACON 고객 지원 등급 분류",
+      "subtitle": "고객 데이터 기반 지원 필요 수준 분류",
+      "period": "2025.09 – 2025.10",
+      "category": "ai",
+      "kind": "개인 프로젝트",
+      "summary": "고객 데이터를 기반으로 지원 필요 수준을 분류하고 feature engineering과 모델 성능 비교를 수행한 프로젝트입니다.",
+      "tech": ["Python", "scikit-learn", "TensorFlow", "XGBoost"],
+      "outcome": "F1 Score 상위 10%를 달성했습니다.",
+      "links": [
+        {"label": "GitHub", "url": "https://github.com/juhee0223/DACON-Customer-Support-Classification"}
+      ],
+      "role": "개인 프로젝트의 데이터 전처리·모델 비교 실험",
+      "sections": [
+        {
+          "title": "분류 문제 구성",
+          "paragraphs": ["고객 데이터에서 지원 필요 수준을 분류하는 AI 모델을 개발했습니다."],
+          "bullets": ["Feature engineering", "분류 모델 학습"]
+        },
+        {
+          "title": "모델 비교",
+          "paragraphs": ["scikit-learn, TensorFlow, XGBoost 기반으로 모델별 성능을 비교했습니다."],
+          "bullets": ["F1 Score 기준 평가", "상위 10% 기록"]
+        }
+      ]
+    },
+    {
+      "slug": "bird-repeller",
+      "title": "AI Bird Repeller",
+      "subtitle": "조류 인식과 기피음 재생을 결합한 지능형 퇴치 시스템",
+      "period": "2025.05",
+      "category": "ai",
+      "kind": "무박 2일 팀 해커톤",
+      "summary": "농작물에 피해를 입히는 조류를 인식하고, 각 새가 싫어하는 소리를 자동 재생하는 지능형 퇴치 시스템입니다.",
+      "tech": ["Python", "Threading", "YOLOv5", "BirdNET"],
+      "outcome": "KHUTHON 2025 해커톤 우수상을 받았으며, 실시간 AI 추론 환경의 리소스 최적화를 다뤘습니다.",
+      "links": [
+        {"label": "GitHub", "url": "https://github.com/JustYOLO/Getout_Bird"}
+      ],
+      "role": "팀 프로젝트",
+      "sections": [
+        {
+          "title": "인식과 대응 자동화",
+          "paragraphs": ["농작물 피해 조류를 인식하고 조류 종류에 맞춘 기피음을 자동 재생하도록 구성했습니다."],
+          "bullets": ["YOLOv5 기반 조류 인식", "BirdNET 활용", "자동 기피음 재생"]
+        },
+        {
+          "title": "실시간 환경 고려",
+          "paragraphs": ["무박 2일 해커톤에서 실시간 AI 추론 환경의 리소스 사용을 고려해 시스템을 구현했습니다."],
+          "bullets": ["Threading 활용", "KHUTHON 2025 우수상"]
+        }
+      ]
+    },
+    {
+      "slug": "rocksdb",
+      "title": "RocksDB Compaction Analyzer",
+      "subtitle": "Compaction Style에 따른 저장 엔진 성능 변화 분석",
+      "period": "2025.01 – 2025.05",
+      "category": "systems",
+      "kind": "연구 프로젝트 · 논문 제1저자",
+      "summary": "RocksDB의 Leveled·Universal·FIFO Compaction Style에 따른 성능을 자동 측정·분석·시각화한 연구입니다.",
+      "tech": ["RocksDB DBBench", "Bash", "Python"],
+      "outcome": "KCC 2025에서 제1저자로 논문을 발표했습니다.",
+      "links": [
+        {"label": "KCC 2025", "url": "https://www.kiise.or.kr/conference/kcc/2025/"}
+      ],
+      "role": "비교 실험·통계 수집·분석, 논문 제1저자 작성 및 KCC 2025 발표",
+      "sections": [
+        {
+          "title": "동일 조건의 세 가지 Compaction Style 비교",
+          "paragraphs": ["1천만 건, 값 4,096B, 랜덤 쓰기 후 랜덤 읽기 조건에서 Leveled·Universal·FIFO를 비교했습니다."],
+          "bullets": ["db_bench와 statistics로 측정", "처리율·Write Amplification Factor·조회 성공 횟수 함께 해석"]
+        },
+        {
+          "title": "처리율과 데이터 보존을 함께 해석",
+          "paragraphs": ["Leveled는 Universal보다 읽기가 빨랐지만 쓰기 증폭이 컸고, Universal은 읽기와 쓰기의 절충안으로 해석했습니다. FIFO는 쓰기 부담이 작지만 조회 성공 횟수가 낮아 높은 읽기 처리율만으로 조회 성능이 좋다고 볼 수 없었습니다."],
+          "bullets": ["Leveled: 읽기 84,097 ops/s · WAF 4.50 · Hit 7,134,622회", "Universal: 읽기 64,667 ops/s · WAF 3.43 · Hit 7,005,533회", "FIFO: 읽기 2,603,357 ops/s · WAF 1.56 · Hit 5,797회"]
+        }
+      ]
+    }
+  ],
+  "publications": [
+    {
+      "title": "운영체제 교재기반 RAG시스템 구축",
+      "venue": "글통",
+      "year": "2026",
+      "authors": "김보승, 박주희, 최종무, 전광일, 박민규",
+      "description": "운영체제 교재 텍스트를 바탕으로 RAG 시스템을 구축하는 과정을 다룬 교육용 저서입니다.",
+      "distinction": "공동저자 · 비매품 단행본 · ISBN 979-11-94546-10-8",
+      "links": []
+    },
+    {
+      "title": "Visualization and Semantic Interpretation of Vector Space Structures: A Case Study Based on OSTEP",
+      "venue": "WDSC 2025",
+      "year": "2025",
+      "authors": "Bo-seung Kim, Juhee Park, 외 4명",
+      "description": "OSTEP 교재 텍스트를 임베딩하고 벡터 공간의 구조를 시각화해 의미론적 군집을 분석한 연구입니다.",
+      "distinction": "공동저자 · 우수논문상",
+      "links": [
+        {"label": "학회", "url": "https://sites.google.com/view/wdsc2025/"},
+        {"label": "연구 저장소", "url": "https://github.com/DKU-StarLab/OSTEP_RAG"}
+      ]
+    },
+    {
+      "title": "RocksDB에서 Compaction Style에 따른 성능 변화 분석",
+      "venue": "KCC 2025",
+      "year": "2025",
+      "authors": "박주희, 신호진, Guangxun Zhao, 최종무",
+      "description": "RocksDB의 Leveled·Universal·FIFO 컴팩션 정책에 따른 Write Amplification과 Read Efficiency의 트레이드오프를 정량적으로 분석했습니다.",
+      "distinction": "제1저자 · KCC 2025 발표",
+      "links": [
+        {"label": "학회", "url": "https://www.kiise.or.kr/conference/kcc/2025/"}
+      ]
+    }
+  ],
+  "awards": [
+    {"date": "2026.08.22", "title": "의료 특화 파운데이션 모델 해커톤 벤치마크상", "organization": "루닛 · 과학기술정보통신부 · NIPA", "project": "AIM팀 / Conquer Health"},
+    {"date": "2025.11.22", "title": "EASYTHON 2025 해커톤 우수상", "organization": "단국대 SW중심사업단", "project": "Sun(善)-Date"},
+    {"date": "2025.08.20", "title": "WDSC 2025 우수논문상", "organization": "정보보안 및 고신뢰컴퓨팅 하계워크샵", "project": "OSTEP 벡터 공간 분석 연구"},
+    {"date": "2025.05.10", "title": "KHUTHON 2025 해커톤 우수상", "organization": "SW중심사업단 (단국대 외 3개교)", "project": "AI Bird Repeller"}
+  ],
+  "activities": [
+    {
+      "period": "2026.03 – 2026.08",
+      "title": "단국대학교 SW 서포터즈",
+      "bullets": ["신설 홍보팀에서 SW중심대학사업단 주요 행사·장학 정보 인스타그램 카드뉴스 기획 및 디자인 제작", "교내 주요 경진대회 발표장 메인 진행자(MC)와 SW 관련 행사 운영 전반 지원"]
+    },
+    {
+      "period": "2025.09 – 2026.02",
+      "title": "단국대학교 SW 서포터즈",
+      "bullets": ["캡스톤 대회, AI톤 등 SW중심대학사업단 주관 주요 행사 운영 보조", "Cosmos+ OpenSSD 장비 관리, FTL 실습 지원 및 연구 장비 교육 보조"]
+    }
+  ]
+}
