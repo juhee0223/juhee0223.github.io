@@ -74,11 +74,19 @@ h1, h2, h3 { line-height: 1.5; letter-spacing: -.04em; }
 .pub-main > .eyebrow { font-size: 10px; margin-bottom: 9px; }
 .pub-main h3 { font-size: 19px; font-weight: 500; line-height: 1.7; letter-spacing: -.02em; }
 .pub-main > p { font-size: 12px; color: var(--muted); line-height: 1.9; margin-top: 12px; }
+.pub-abstract { margin: 18px 0; font-size: 12px; line-height: 1.95; }
+.pub-abstract > div { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 16px; margin-top: 10px; }
+.pub-abstract dt { color: var(--accent); font-weight: 500; }
+.pub-abstract dd { margin: 0; color: var(--ink); }
+.publication:target { border-top: 2px solid var(--accent); }
 .pub-main .pub-authors { font-size: 11px; margin-top: 9px; }
 .pub-distinction { font-size: 11px; color: var(--accent); line-height: 1.9; padding-top: 4px; text-align: right; }
 .pub-links { display: flex; flex-wrap: wrap; gap: 12px 22px; margin-top: 17px; }
 .award { display: grid; grid-template-columns: 105px minmax(0, 1fr) 200px; gap: 30px; align-items: baseline; padding: 24px 0; border-bottom: 1px solid var(--line); }
-.award time, .award > span { font-size: 11px; color: var(--muted); }
+.award time, .award-project > span:first-child { font-size: 11px; color: var(--muted); }
+.award-project { display: flex; flex-direction: column; gap: 7px; justify-self: start; }
+.award-cta { color: var(--accent); font-size: 11px; }
+.award-project:hover .award-cta { color: var(--accent-hover); text-decoration: underline; text-underline-offset: 4px; }
 .award h3 { font-size: 16px; font-weight: 500; color: var(--accent); }
 .award p { font-size: 11px; color: var(--muted); margin-top: 7px; }
 .activity-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 52px; }
@@ -147,7 +155,7 @@ h1, h2, h3 { line-height: 1.5; letter-spacing: -.04em; }
   .section-heading > p { margin-top: 13px; }
   .publication { grid-template-columns: minmax(0, 1fr) 140px; gap: 25px; }
   .award { grid-template-columns: 88px minmax(0, 1fr); gap: 10px 24px; }
-  .award > span { grid-column: 2; }
+  .award-project { grid-column: 2; }
   .contact-email { font-size: 18px; }
   .case-layout { grid-template-columns: minmax(0, 1fr); gap: 32px; }
   .case-toc { position: static; flex-direction: row; flex-wrap: wrap; gap: 12px 22px; border-bottom: 1px solid var(--line); padding-bottom: 24px; }
@@ -185,7 +193,7 @@ h1, h2, h3 { line-height: 1.5; letter-spacing: -.04em; }
   .pub-main h3 { font-size: 18px; }
   .pub-distinction { text-align: left; padding-top: 0; }
   .award { grid-template-columns: minmax(0, 1fr); gap: 9px; padding-block: 23px; }
-  .award > span { grid-column: 1; }
+  .award-project { grid-column: 1; }
   .activity { padding-block: 25px; }
   .skills-panel { grid-template-columns: minmax(0, 1fr); gap: 24px; margin-top: 20px; }
   .contact-section { grid-template-columns: minmax(0, 1fr); gap: 28px; }

@@ -498,7 +498,8 @@
       "authors": "김보승, 박주희, 최종무, 전광일, 박민규",
       "description": "운영체제 교재 텍스트를 바탕으로 RAG 시스템을 구축하는 과정을 다룬 교육용 저서입니다.",
       "distinction": "공동저자 · 비매품 단행본 · ISBN 979-11-94546-10-8",
-      "links": []
+      "links": [],
+      "id": "publication-rag-book"
     },
     {
       "title": "Visualization and Semantic Interpretation of Vector Space Structures: A Case Study Based on OSTEP",
@@ -516,19 +517,35 @@
           "label": "연구 저장소",
           "url": "https://github.com/DKU-StarLab/OSTEP_RAG"
         }
-      ]
+      ],
+      "id": "publication-wdsc"
     },
     {
       "title": "RocksDB에서 Compaction Style에 따른 성능 변화 분석",
       "venue": "KCC 2025",
       "year": "2025",
       "authors": "박주희, 신호진, Guangxun Zhao, 최종무",
-      "description": "RocksDB의 Leveled·Universal·FIFO 컴팩션 정책에 따른 Write Amplification과 Read Efficiency의 트레이드오프를 정량적으로 분석했습니다.",
+      "description": "같은 RocksDB에서도 Compaction 정책에 따라 쓰기 비용과 읽기 성능이 달라지는 이유를 실험하고, 워크로드에 따른 정책 선택의 근거를 제시했습니다.",
       "distinction": "제1저자 · KCC 2025 발표",
       "links": [
         {
           "label": "학회",
           "url": "https://www.kiise.or.kr/conference/kcc/2025/"
+        }
+      ],
+      "id": "publication-kcc",
+      "abstract": [
+        {
+          "label": "연구 목적",
+          "text": "Leveled·Universal·FIFO 정책의 읽기·쓰기 성능과 쓰기 증폭(WAF)을 비교해, 어떤 작업에 각 정책이 유리한지 분석했습니다."
+        },
+        {
+          "label": "실험 방법",
+          "text": "동일 환경에서 db_bench로 값 크기 4KB의 데이터 1,000만 건을 랜덤 쓰기한 뒤 랜덤 읽기를 수행했습니다. 처리율·지연시간·WAF와 실제 조회 성공률(Hit Rate)을 함께 비교했습니다."
+        },
+        {
+          "label": "주요 결과",
+          "text": "Leveled는 Universal보다 읽기 처리율이 약 1.3배 높았지만 WAF도 1.31배 높았습니다. FIFO는 쓰기 시간과 WAF가 가장 낮은 대신 데이터 삭제로 조회 성공률이 낮아졌습니다. 단일 정책의 우열보다 워크로드별 절충이 중요하며, 혼합 워크로드 검증은 후속 과제로 남겼습니다."
         }
       ]
     }
@@ -538,25 +555,33 @@
       "date": "2026.08.22",
       "title": "의료 특화 파운데이션 모델 해커톤 벤치마크상",
       "organization": "루닛 · 과학기술정보통신부 · NIPA",
-      "project": "AIM팀 / Conquer Health"
+      "project": "AIM팀 / Conquer Health",
+      "url": "projects/conquer-health.html",
+      "link_label": "프로젝트 읽기"
     },
     {
       "date": "2025.11.22",
       "title": "EASYTHON 2025 해커톤 우수상",
       "organization": "단국대 SW중심사업단",
-      "project": "Sun(善)-Date"
+      "project": "Sun(善)-Date",
+      "url": "projects/sun-date.html",
+      "link_label": "프로젝트 읽기"
     },
     {
       "date": "2025.08.20",
       "title": "WDSC 2025 우수논문상",
       "organization": "정보보안 및 고신뢰컴퓨팅 하계워크샵",
-      "project": "OSTEP 벡터 공간 분석 연구"
+      "project": "OSTEP 벡터 공간 분석 연구",
+      "url": "#publication-wdsc",
+      "link_label": "논문 요약 읽기"
     },
     {
       "date": "2025.05.10",
       "title": "KHUTHON 2025 해커톤 우수상",
       "organization": "SW중심사업단 (단국대 외 3개교)",
-      "project": "AI Bird Repeller"
+      "project": "AI Bird Repeller",
+      "url": "projects/bird-repeller.html",
+      "link_label": "프로젝트 읽기"
     }
   ],
   "activities": [

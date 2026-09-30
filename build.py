@@ -54,8 +54,11 @@ def card(p, i):
 
 def home():
     project_html=''.join(card(p,i) for i,p in enumerate(DATA['projects']))
-    pubs=''.join(f'''<article class="publication"><div class="pub-main"><div class="eyebrow">{e(p['venue'])} / {e(p['year'])}</div><h3>{e(p['title'])}</h3><p>{e(p['description'])}</p><p class="pub-authors">{e(p['authors'])}</p><div class="pub-links">{links(p['links'])}</div></div><span class="pub-distinction">{e(p['distinction'])}</span></article>''' for i,p in enumerate(DATA['publications']))
-    awards=''.join(f'''<article class="award"><time>{e(a['date'])}</time><div><h3>{e(a['title'])}</h3><p>{e(a['organization'])}</p></div><span>{e(a['project'])}</span></article>''' for a in DATA['awards'])
+    pubs=''
+    for p in DATA['publications']:
+        abstract = '<dl class="pub-abstract">'+''.join(f'<div><dt>{e(row["label"])}</dt><dd>{e(row["text"])}</dd></div>' for row in p['abstract'])+'</dl>' if p.get('abstract') else ''
+        pubs+=f'''<article class="publication" id="{e(p['id'])}"><div class="pub-main"><div class="eyebrow">{e(p['venue'])} / {e(p['year'])}</div><h3>{e(p['title'])}</h3><p>{e(p['description'])}</p>{abstract}<p class="pub-authors">{e(p['authors'])}</p><div class="pub-links">{links(p['links'])}</div></div><span class="pub-distinction">{e(p['distinction'])}</span></article>'''
+    awards=''.join(f'''<article class="award"><time>{e(a['date'])}</time><div><h3>{e(a['title'])}</h3><p>{e(a['organization'])}</p></div><a class="award-project" href="{e(a['url'])}"><span>{e(a['project'])}</span><span class="award-cta">{e(a['link_label'])} <span aria-hidden="true">→</span></span></a></article>''' for a in DATA['awards'])
     activities=''.join(f'''<article class="activity"><div class="eyebrow">{e(a['period'])}</div><h3>{e(a['title'])}</h3><ul>{''.join(f'<li>{e(b)}</li>' for b in a['bullets'])}</ul></article>''' for a in DATA['activities'])
     return f'''<main id="main">
 <section class="hero container"><p class="eyebrow">박주희 · DX Engineer</p><h1>현장의 요구를 이해하고,<br><span class="accent-text">업무를 개선하는 서비스</span>를 만듭니다.</h1><p class="hero-description">사용자와 운영자의 요구를 조율하고, 서비스와 데이터의 흐름을 연결합니다.<br>AI를 활용한 구현부터 사용자 검증과 운영 문제 해결까지 경험했습니다.</p><div class="hero-actions"><a class="text-link" href="#projects">프로젝트 살펴보기 ↓</a><a class="text-link" href="https://github.com/juhee0223" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div></section>
