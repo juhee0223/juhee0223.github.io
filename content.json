@@ -661,34 +661,40 @@
     {
       "date": "2026.08.22",
       "title": "의료 특화 파운데이션 모델 해커톤 벤치마크상",
-      "organization": "루닛 · 과학기술정보통신부 · NIPA",
+      "organization": "루닛 (후원: 과학기술정보통신부 · NIPA)",
       "project": "AIM팀 / Conquer Health",
       "url": "projects/conquer-health.html",
-      "link_label": "프로젝트 읽기"
+      "link_label": "프로젝트 읽기",
+      "summary": "의료 특화 모델의 건강 상담 응답 규칙과 HealthBench 평가 하네스 개선."
     },
     {
       "date": "2025.11.22",
       "title": "EASYTHON 2025 해커톤 우수상",
-      "organization": "단국대 SW중심사업단",
+      "organization": "단국대학교 SW중심사업단",
       "project": "Sun(善)-Date",
       "url": "projects/sun-date.html",
-      "link_label": "프로젝트 읽기"
+      "link_label": "프로젝트 읽기",
+      "summary": "봉사활동 참여와 만남을 연결하는 소셜 매칭 서비스 개발."
     },
     {
       "date": "2025.08.20",
       "title": "WDSC 2025 우수논문상",
-      "organization": "정보보안 및 고신뢰컴퓨팅 하계워크샵",
+      "organization": "한국정보과학회 정보보안 및 고신뢰컴퓨팅연구회",
       "project": "OSTEP 벡터 공간 분석 연구",
       "url": "#publication-wdsc",
-      "link_label": "논문 요약 읽기"
+      "link_label": "논문 요약 읽기",
+      "summary": "OSTEP 교재의 임베딩 구조와 모델·검색 인덱스별 RAG 성능 비교.",
+      "organization_source": "https://sites.google.com/view/wdsc2025/home"
     },
     {
       "date": "2025.05.10",
       "title": "KHUTHON 2025 해커톤 우수상",
-      "organization": "SW중심사업단 (단국대 외 3개교)",
+      "organization": "경희대학교 AI·SW 교육단 · 소프트웨어융합대학",
       "project": "AI Bird Repeller",
       "url": "projects/bird-repeller.html",
-      "link_label": "프로젝트 읽기"
+      "link_label": "프로젝트 읽기",
+      "summary": "조류 인식 결과에 따라 기피음을 재생하는 농작물 보호 시스템 개발.",
+      "organization_source": "https://thon.khlug.org/about/2025"
     }
   ],
   "activities": [
