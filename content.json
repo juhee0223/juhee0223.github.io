@@ -87,7 +87,18 @@
             "부하 테스트 스크립트와 결과 집계 보완"
           ]
         }
-      ]
+      ],
+      "visual": {
+        "src": "assets/danzzan-ticketing.png",
+        "width": 941,
+        "height": 1672,
+        "label": "예매 서비스 화면",
+        "alt": "단짠의 날짜별 예매 상태와 예매 버튼 화면",
+        "caption": "날짜별 예매 상태와 신청 흐름을 확인하는 실제 서비스 화면입니다. 팀 공동 산출물입니다.",
+        "source_url": "",
+        "preview_layout": "phone-detail",
+        "preview_label": "예매 서비스 화면 일부"
+      }
     },
     {
       "slug": "conquer-health",
@@ -151,7 +162,16 @@
             "정식 평가 점수는 팀 전체 구현의 결과이며 개별 규칙의 독립 효과를 뜻하지 않음"
           ]
         }
-      ]
+      ],
+      "visual": {
+        "src": "assets/conquer-response-flow.svg",
+        "width": 1200,
+        "height": 420,
+        "label": "응답·검증 흐름도",
+        "alt": "대화 이력에서 선택적 공식 데이터 조회와 L2 생성을 거쳐 출력 검증·복구 후 응답하는 흐름",
+        "caption": "공개 README의 현재 실행 구조를 바탕으로 정리한 설명용 도식입니다. 필요한 공식 데이터를 조회하고, L2 생성 뒤 출력 결함을 검증하는 흐름을 보여줍니다.",
+        "source_url": "https://github.com/Hackathon-AIM/health-conquer-submission"
+      }
     },
     {
       "slug": "olly",
@@ -216,7 +236,16 @@
             "SLM·Discord 기반 알림 흐름 구성"
           ]
         }
-      ]
+      ],
+      "visual": {
+        "src": "assets/olly-architecture.png",
+        "width": 1920,
+        "height": 1080,
+        "label": "관측성 아키텍처",
+        "alt": "Chat UI부터 OpenTelemetry·Prometheus·Jaeger·Discord 알림으로 이어지는 OLLY 구조도",
+        "caption": "요청 처리를 관측 파이프라인과 분리하고 지표·trace·오류 알림을 연결한 구조입니다. 공개 최종 발표자료 6쪽의 팀 공동 산출물입니다.",
+        "source_url": "https://github.com/lee-y-ch/olly/blob/b0cdb00ade035b750ed7618bc401dd96ca013b85/presentation/OLLY_%EC%B5%9C%EC%A2%85%EB%B0%9C%ED%91%9C.pdf#page=6"
+      }
     },
     {
       "slug": "sketch-to-spec",
@@ -263,7 +292,24 @@
             "로컬 LLM Qwen 활용"
           ]
         }
-      ]
+      ],
+      "visual": {
+        "src": "assets/sketch-generated-srs.png",
+        "width": 971,
+        "height": 1054,
+        "label": "요구사항 생성 화면",
+        "alt": "SketchToSpec이 생성한 비기능 요구사항과 ASCII 화면 흐름",
+        "caption": "최종 보고서에 수록된 비기능 요구사항 명세와 ASCII 화면 흐름의 생성 예시입니다.",
+        "source_url": "",
+        "preview": {
+          "src": "assets/sketch-input-example.jpg",
+          "width": 745,
+          "height": 1168,
+          "alt": "SketchToSpec 저장소의 손그림 메시지 화면 입력 예시"
+        },
+        "preview_label": "손그림 UI 입력 예시",
+        "preview_layout": "sketch-detail"
+      }
     },
     {
       "slug": "sun-date",
@@ -307,7 +353,16 @@
             "프로젝트 저장소 공개"
           ]
         }
-      ]
+      ],
+      "visual": {
+        "src": "assets/sundate-user-flow.png",
+        "width": 1440,
+        "height": 810,
+        "label": "사용자 흐름도",
+        "alt": "가입·상대방 선택·봉사 매칭·기관 전송으로 이어지는 Sun-Date 시나리오",
+        "caption": "EASYTHON 최종 발표자료의 사용자 시나리오입니다. 프로필 기반 상대방 선택부터 봉사 매칭과 기관 전송까지의 흐름을 담았습니다.",
+        "source_url": "https://github.com/day-e0n/sun_date"
+      }
     },
     {
       "slug": "gamegc",
@@ -353,7 +408,16 @@
             "스토리지 GC 동작 탐구"
           ]
         }
-      ]
+      ],
+      "visual": {
+        "src": "assets/gamegc-xilinx-console.png",
+        "width": 2876,
+        "height": 1800,
+        "label": "Xilinx SDK 실험 화면",
+        "alt": "Xilinx SDK에서 Cost-Benefit GC의 victim 선택과 erase 로그를 확인하는 COSMOS+ 실험 화면",
+        "caption": "COSMOS+ 환경에서 Cost-Benefit GC의 실행 로그를 확인한 화면입니다. 저장소에 공개된 팀 실험 기록입니다.",
+        "source_url": "https://github.com/day-e0n/ssp_team_project/blob/main/cost_benefit_final_console.png"
+      }
     },
     {
       "slug": "dacon",
@@ -398,7 +462,16 @@
             "상위 10% 기록"
           ]
         }
-      ]
+      ],
+      "visual": {
+        "src": "assets/dacon-feature-heatmap.png",
+        "width": 2714,
+        "height": 2519,
+        "label": "고객 특성 상관관계 분석",
+        "alt": "나이·이용 기간·결제 간격 등 원본 고객 특성 간 상관계수 히트맵",
+        "caption": "원본 고객 특성 간 관계를 살펴본 탐색적 데이터 분석 결과입니다.",
+        "source_url": "https://github.com/juhee0223/DACON-Customer-Support-Classification"
+      }
     },
     {
       "slug": "bird-repeller",
@@ -444,7 +517,16 @@
             "KHUTHON 2025 우수상"
           ]
         }
-      ]
+      ],
+      "visual": {
+        "src": "assets/bird-detection.jpg",
+        "width": 792,
+        "height": 448,
+        "label": "조류 탐지 결과",
+        "alt": "테스트 이미지에서 Magpie로 분류된 까치와 탐지 bounding box",
+        "caption": "저장소의 테스트 이미지에서 까치를 Magpie로 탐지한 출력 예시입니다.",
+        "source_url": "https://github.com/JustYOLO/Getout_Bird/blob/main/watchbird/test_image/frame_result_10.jpg"
+      }
     },
     {
       "slug": "rocksdb",
@@ -489,7 +571,16 @@
             "FIFO: 읽기 2,603,357 ops/s · WAF 1.56 · Hit 5,797회"
           ]
         }
-      ]
+      ],
+      "visual": {
+        "src": "assets/rocksdb-read-hits.jpg",
+        "width": 1564,
+        "height": 863,
+        "label": "논문 실험 그래프",
+        "alt": "Leveled·Universal·FIFO 정책별 Get key 조회 성공 횟수를 비교한 로그 축 그래프",
+        "caption": "KCC 2025 논문 그림 5. 실제 조회 성공 횟수를 비교했습니다. FIFO는 오래된 데이터를 삭제하므로 처리율과 데이터 보존 특성을 함께 해석했습니다.",
+        "source_url": "https://www.kiise.or.kr/conference/kcc/2025/"
+      }
     }
   ],
   "publications": [

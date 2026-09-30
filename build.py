@@ -49,8 +49,20 @@ def shell(title, body, depth='', description='요구사항 조율, 서비스·�
 <footer class="site-footer"><div class="container footer-inner"><p>박주희의 프로젝트와 연구 기록.<br><span>© 2026 Park Juhee</span></p><a href="https://github.com/juhee0223" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="#main">맨 위로 ↑</a></div></footer>
 </body></html>'''
 
+def project_image(v, depth=''):
+    return f'<img src="{depth}{e(v["src"])}" alt="{e(v["alt"])}" width="{v["width"]}" height="{v["height"]}" loading="lazy" decoding="async">'
+
+def project_visual(p):
+    v = p.get('visual')
+    if not v:
+        return ''
+    source = f'<a class="text-link" href="{e(v["source_url"])}" target="_blank" rel="noopener noreferrer">자료 출처 ↗</a>' if v.get('source_url') else ''
+    return f'''<figure id="visual" class="case-visual"><a class="visual-open" href="../{e(v['src'])}" target="_blank" rel="noopener" aria-label="{e(p['title'])} 대표 자료 크게 보기">{project_image(v, '../')}</a><figcaption><strong>{e(v['label'])}</strong><p>{e(v['caption'])}</p><div class="visual-links"><a class="text-link" href="../{e(v['src'])}" target="_blank" rel="noopener">크게 보기 ↗</a>{source}</div></figcaption></figure>'''
+
 def card(p, i):
-    return f'''<article class="project-card" data-category="{e(p['category'])}"><a class="card-body" href="projects/{e(p['slug'])}.html" aria-labelledby="project-{e(p['slug'])}"><div class="card-meta"><span>{e(p['kind'])}</span><span>{e(p['period'])}</span></div><h3 id="project-{e(p['slug'])}">{e(p['title'])}<span aria-hidden="true">↗</span></h3><p class="card-subtitle">{e(p['subtitle'])}</p><p class="card-description">{e(p['summary'])}</p><div class="tech-tags">{tags(p['tech'][:5])}</div><div class="card-result">{e(p['outcome'])}</div><span class="card-cta">프로젝트 읽기 <span aria-hidden="true">→</span></span></a></article>'''
+    v = p.get('visual')
+    media = f'<div class="card-media {e(v.get("preview_layout", ""))}">{project_image(v.get("preview", v))}</div><p class="card-media-label">{e(v.get("preview_label", v["label"]))}</p>' if v else ''
+    return f'''<article class="project-card" data-category="{e(p['category'])}"><a class="card-body" href="projects/{e(p['slug'])}.html" aria-labelledby="project-{e(p['slug'])}">{media}<div class="card-meta"><span>{e(p['kind'])}</span><span>{e(p['period'])}</span></div><h3 id="project-{e(p['slug'])}">{e(p['title'])}<span aria-hidden="true">↗</span></h3><p class="card-subtitle">{e(p['subtitle'])}</p><p class="card-description">{e(p['summary'])}</p><div class="tech-tags">{tags(p['tech'][:5])}</div><div class="card-result">{e(p['outcome'])}</div><span class="card-cta">프로젝트 읽기 <span aria-hidden="true">→</span></span></a></article>'''
 
 def home():
     project_html=''.join(card(p,i) for i,p in enumerate(DATA['projects']))
@@ -76,12 +88,12 @@ def detail(p,i):
         body_sections+=f'<section class="case-section" id="section-{j}"><div><h2>{e(s["title"])}</h2>{paragraphs}{bullets}</div></section>'
     gallery=''
     if p['slug']=='danzzan':
-        gallery='''<section class="case-gallery"><div class="eyebrow">서비스 화면</div><h2>서비스 화면</h2><div class="phone-gallery"><figure><a href="../assets/danzzan-ticketing.png" target="_blank" rel="noopener"><img src="../assets/danzzan-ticketing.png" alt="단짠 날짜별 예매 상태와 예매 버튼 화면" loading="lazy" width="941" height="1672"></a><figcaption>날짜별 예매 상태와 예매 흐름 · 팀 공동 산출물</figcaption></figure><figure><a href="../assets/danzzan-consent.png" target="_blank" rel="noopener"><img src="../assets/danzzan-consent.png" alt="단짠 예매 안내와 필수 동의 확인 화면" loading="lazy" width="941" height="1672"></a><figcaption>예매 안내와 필수 동의 확인 · 팀 공동 산출물</figcaption></figure></div></section>'''
+        gallery='''<section class="case-gallery"><div class="eyebrow">서비스 화면</div><h2>예매 안내와 동의 확인</h2><div class="phone-gallery"><figure><a href="../assets/danzzan-consent.png" target="_blank" rel="noopener"><img src="../assets/danzzan-consent.png" alt="단짠 예매 안내와 필수 동의 확인 화면" loading="lazy" width="941" height="1672"></a><figcaption>예매 안내와 필수 동의 확인 · 팀 공동 산출물</figcaption></figure></div></section>'''
     elif p['slug']=='olly':
         gallery='''<section class="case-gallery"><div class="eyebrow">로컬 MVP 데모</div><h2>오류 요청도 추적할 수 있도록</h2><figure><a href="../assets/olly-error.png" target="_blank" rel="noopener"><img class="wide-image" src="../assets/olly-error.png" alt="의도적으로 오류를 발생시킨 OLLY 데모에서 요청 ID, trace ID, 오류 상태가 함께 표시된 화면" width="1336" height="676" loading="lazy"></a><figcaption>실패 요청의 ID와 오류 상태를 유지하는 데모 화면 · 팀 공동 산출물</figcaption></figure></section>'''
-    nav=''.join(f'<a href="#section-{j}">{e(s["title"])}</a>' for j,s in enumerate(p['sections']))
+    nav=('<a href="#visual">대표 자료</a>' if p.get('visual') else '') + ''.join(f'<a href="#section-{j}">{e(s["title"])}</a>' for j,s in enumerate(p['sections']))
     nxt=DATA['projects'][(i+1)%len(DATA['projects'])]
-    return f'''<main id="main"><div class="container"><a class="back-link" href="../index.html#projects">← 전체 프로젝트</a><section class="case-hero"><div><p class="eyebrow">{e(CATS[p['category']])}</p><h1>{e(p['title'])}</h1><p class="case-subtitle">{e(p['subtitle'])}</p><div class="case-meta"><span>{e(p['period'])}</span><span>{e(p['kind'])}</span></div><p class="case-summary">{e(p['summary'])}</p><div class="pub-links">{links(p['links'])}</div></div></section><div class="case-overview"><div><span class="eyebrow">기여와 역할</span><p>{e(p['role'])}</p></div><div><span class="eyebrow">결과</span><p>{highlighted(p['outcome'],p['slug'])}</p></div><div><span class="eyebrow">사용 기술</span><div class="tech-tags">{tags(p['tech'])}</div></div></div><div class="case-layout"><aside class="case-toc"><span class="eyebrow">목차</span>{nav}<a href="#evidence">관련 자료</a></aside><div class="case-body">{body_sections}{gallery}<section id="evidence" class="case-evidence"><p class="eyebrow">관련 자료</p><h2>구현과 기록 살펴보기</h2><div class="evidence-links">{links(p['links'])}</div></section></div></div><nav class="project-pagination" aria-label="프로젝트 이동"><a href="../index.html#projects">← 프로젝트 목록</a><a href="{e(nxt['slug'])}.html"><small>다음 프로젝트</small><strong>{e(nxt['title'])} →</strong></a></nav></div></main>'''
+    return f'''<main id="main"><div class="container"><a class="back-link" href="../index.html#projects">← 전체 프로젝트</a><section class="case-hero"><div><p class="eyebrow">{e(CATS[p['category']])}</p><h1>{e(p['title'])}</h1><p class="case-subtitle">{e(p['subtitle'])}</p><div class="case-meta"><span>{e(p['period'])}</span><span>{e(p['kind'])}</span></div><p class="case-summary">{e(p['summary'])}</p><div class="pub-links">{links(p['links'])}</div></div></section><div class="case-overview"><div><span class="eyebrow">기여와 역할</span><p>{e(p['role'])}</p></div><div><span class="eyebrow">결과</span><p>{highlighted(p['outcome'],p['slug'])}</p></div><div><span class="eyebrow">사용 기술</span><div class="tech-tags">{tags(p['tech'])}</div></div></div><div class="case-layout"><aside class="case-toc"><span class="eyebrow">목차</span>{nav}<a href="#evidence">관련 자료</a></aside><div class="case-body">{project_visual(p)}{body_sections}{gallery}<section id="evidence" class="case-evidence"><p class="eyebrow">관련 자료</p><h2>구현과 기록 살펴보기</h2><div class="evidence-links">{links(p['links'])}</div></section></div></div><nav class="project-pagination" aria-label="프로젝트 이동"><a href="../index.html#projects">← 프로젝트 목록</a><a href="{e(nxt['slug'])}.html"><small>다음 프로젝트</small><strong>{e(nxt['title'])} →</strong></a></nav></div></main>'''
 
 (ROOT/'index.html').write_text(shell('DX Engineer Portfolio', home()))
 (ROOT/'projects').mkdir(exist_ok=True)
