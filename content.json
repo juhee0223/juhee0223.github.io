@@ -595,6 +595,30 @@
       "id": "publication-rag-book"
     },
     {
+      "id": "publication-ksc",
+      "title": "SSD 병렬성을 활용한 할당 정책에 따른 Bandwidth 및 Latency 분석",
+      "venue": "KSC 2025",
+      "year": "2025",
+      "authors": "위다연, 박주희, 최건희, 이제연, 최종무",
+      "description": "실제 Cosmos+ OpenSSD에서 할당 정책에 따른 대역폭과 지연시간을 비교해, 순차 읽기·쓰기에 적합한 병렬 자원 활용 방식을 분석했습니다.",
+      "distinction": "공동저자 · KSC 2025 게재 · pp. 1704–1706",
+      "links": [],
+      "abstract": [
+        {
+          "label": "연구 목적",
+          "text": "SSD 내부의 Channel·Way·Page를 활용하는 순서에 따라 순차 읽기·쓰기 성능이 어떻게 달라지는지 살폈습니다. 동일한 하드웨어에서 워크로드별 할당 정책 선택의 근거를 제시하고자 했습니다."
+        },
+        {
+          "label": "실험 방법",
+          "text": "4개 Channel·2개 Way의 Cosmos+ OpenSSD에 Channel·Way·Page 우선 할당 정책을 적용했습니다. fio로 순차 읽기·쓰기를 수행하고 I/O Depth 1·2·4·8에서 대역폭과 지연시간을 비교했습니다."
+        },
+        {
+          "label": "주요 결과",
+          "text": "실험 범위에서 순차 쓰기는 Channel 우선, 순차 읽기는 Way 우선 정책이 가장 유리했습니다. Page 우선은 병렬성을 활용하지 못해 I/O Depth가 높아져도 대역폭 증가가 작고 지연이 커졌습니다. 워크로드에 따른 정책 선택이 필요하며, 동적 정책 전환은 후속 연구로 제안했습니다."
+        }
+      ]
+    },
+    {
       "title": "OSTEP 교재 기반 임베딩 모델의 구조적 특성과 검색 증강 생성 성능 비교 연구",
       "venue": "WDSC 2025",
       "year": "2025",
@@ -706,12 +730,16 @@
       "bullets": [
         "운영체제 교재 기반 RAG 연구의 키워드 시각화와 결과 해석에 참여 · WDSC 2025 우수논문상",
         "Cosmos+ OpenSSD의 할당 정책별 대역폭·지연시간 분석 공동연구 참여 · KSC 2025 논문 게재",
-        "Text-to-SQL 연구의 데이터 정제 지원"
+        "BigQuery에서 받은 데이터를 Text-to-SQL 도구의 입력 형식에 맞춰 JSON으로 직접 전처리·가공"
       ],
       "links": [
         {
           "label": "WDSC 논문 요약",
           "url": "#publication-wdsc"
+        },
+        {
+          "label": "KSC 논문 요약",
+          "url": "#publication-ksc"
         }
       ]
     },
