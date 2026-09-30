@@ -156,19 +156,19 @@
     {
       "slug": "olly",
       "title": "OLLY",
-      "subtitle": "운영 관점에서 LLM 서비스의 지연·실패를 추적한 관측성 MVP",
+      "subtitle": "Kubernetes 기반 LLM 서비스 관측성 플랫폼",
       "period": "2026.05 – 2026.06",
       "category": "systems",
       "kind": "4인 팀 · 로컬 MVP",
-      "summary": "LLM/RAG 서비스에서 검색·모델 호출·오류를 요청 단위로 연결해 지연 원인을 추적하는 관측성 MVP입니다.",
+      "summary": "로컬 Kubernetes(kind) 환경에서 LLM/RAG 서비스의 검색·모델 호출·오류를 요청 단위로 연결한 관측성 MVP입니다. 지표와 trace, 알림을 함께 확인해 지연과 실패 원인을 추적합니다.",
       "tech": [
-        "FastAPI",
+        "Kubernetes (kind)",
         "OpenTelemetry",
         "Prometheus",
-        "Jaeger",
         "Grafana",
+        "Jaeger",
+        "FastAPI",
         "Docker",
-        "Kubernetes",
         "Ollama"
       ],
       "outcome": "정상·검색 지연·모델 지연·토큰 증가·오류의 5개 시나리오를 각 10회 실행해 span·지표·오류 알림 연결을 확인했습니다.",
@@ -312,12 +312,14 @@
     {
       "slug": "gamegc",
       "title": "FTL Simulator / GameGC",
-      "subtitle": "GC 정책과 점진적 회수 방식의 성능 비교 실험",
+      "subtitle": "Xilinx · Cosmos+ 기반 FTL·GC 성능 실험",
       "period": "2025.10 – 2025.12",
       "category": "systems",
       "kind": "팀 프로젝트 · 연구",
-      "summary": "Greedy·Cost-Benefit GC 정책과 Incremental GC를 모방한 Pipeline 기반 GameGC 방식의 성능을 비교한 프로젝트입니다.",
+      "summary": "Xilinx·Cosmos+ 보드를 활용한 FTL 실험 프로젝트입니다. Greedy·Cost-Benefit GC 정책과 Incremental GC를 모방한 Pipeline 기반 GameGC 방식의 성능을 비교했습니다.",
       "tech": [
+        "Xilinx",
+        "Cosmos+ OpenSSD",
         "C",
         "File I/O",
         "Visualization"
